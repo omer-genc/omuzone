@@ -33,6 +33,7 @@ const Products: React.FC<Props> = ({
   isPromotion,
 }) => {
   const router = useRouter();
+  const [search, setSearch] = useState('');
 
   const handleCategory = (category: number, isAdd: boolean) => {
     const query = new URLSearchParams(router.query as any);
@@ -110,7 +111,48 @@ const Products: React.FC<Props> = ({
   return (
     <div>
       <Layout isOneColor={true} categories={categories} products={allProducts}>
-        <div className="container mx-auto p-2 mt-20 sm:mt-48">
+        <div className="container mx-auto p-2 mt-20 sm:mt-48 relative">
+          {/* Search */}
+          <div className="flex items-center justify-center my-4 md:mt-0">
+            <div className="flex items-center">
+              <input
+                type="text"
+                placeholder="Ara..."
+                className="border border-orange-300 rounded-md p-2 outline-orange-500 w-72 md:w-96"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
+          {/* Search result */}
+          {search && (
+            <div className="absolute z-20 w-full top-20 left-0 bg-orange-500 flex flex-wrap">
+              {allProducts.filter((item) =>
+                item.urunAdi.toLowerCase().includes(search.toLowerCase())
+              ).length === 0 ? (
+                <div className="w-full text-center p-4 text-xl text-white font-bold">
+                  Sonuç bulunamadı
+                </div>
+              ) : (
+                <div className="w-full text-center p-4 text-xl text-white font-bold">
+                  Sonuçlar
+                </div>
+              )}
+              {allProducts
+                .filter((item) =>
+                  item.urunAdi.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((item) => (
+                  <div
+                    key={item.urunID}
+                    className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 p-2"
+                  >
+                    <Product data={item} />
+                  </div>
+                ))}
+            </div>
+          )}
+
           <div className="grid grid-cols-12">
             <div
               id="filter"

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { ICategorie } from '../bloc/api';
 
@@ -12,14 +13,37 @@ const Footer: React.FC<Props> = ({ categories }) => {
         <div className="mb-6 md:mb-0">
           <a href="https://flowbite.com/" className="flex items-center">
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Site Adı
+              omuzone
             </span>
           </a>
         </div>
-        <div className="grid grid-cols-2 gap-8 sm:gap-6">
+
+        <div className="grid grid-cols-3 gap-8 sm:gap-6">
+          <div className="">
+            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+              Sayfalar
+            </h2>
+            <ul className="text-gray-600 dark:text-gray-400">
+              <li className="mb-4">
+                <Link href={`/`} className="hover:underline">
+                  Anasayfa
+                </Link>
+              </li>
+              <li className="mb-4">
+                <Link href={`/product`} className="hover:underline">
+                  Ürünler
+                </Link>
+              </li>
+              <li className="mb-4">
+                <Link href={`/about-us`} className="hover:underline">
+                  Hakkımızda
+                </Link>
+              </li>
+            </ul>
+          </div>
           <div>
             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-              Contact
+              İletişim
             </h2>
             <ul className="text-gray-600 dark:text-gray-400">
               <li className="mb-4">

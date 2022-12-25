@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Cart: React.FC<Props> = ({ data }) => {
-  const { user, complateOrder } = useStore();
+  const { user, complateOrder, handleUserModal } = useStore();
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -30,7 +30,22 @@ const Cart: React.FC<Props> = ({ data }) => {
         categories={data.kategoriler}
         isOneColor={true}
       >
-        <div>Giriş Yap</div>
+        <div className="h-screen">
+          <div className="container mx-auto h-full flex justify-center items-center">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold">Lütfen Giriş Yapınız</h1>
+              <p className="text-2xl">
+                Giriş Yapmak İçin{' '}
+                <span
+                  onClick={() => handleUserModal(true)}
+                  className="text-orange-500 hover:text-orange-600"
+                >
+                  tıklayın
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
       </Layout>
     );
   }
@@ -47,64 +62,70 @@ const Cart: React.FC<Props> = ({ data }) => {
             <div className="text-center">
               <h1 className="text-4xl font-bold">Sepetiniz Boş</h1>
               <p className="text-2xl">
-                Sepete ürün eklemek için <Link className='text-orange-500 hover:text-orange-600' href="/product">tıklayın</Link>
+                Sepete ürün eklemek için{' '}
+                <Link
+                  className="text-orange-500 hover:text-orange-600"
+                  href="/product"
+                >
+                  tıklayın
+                </Link>
               </p>
             </div>
           </div>
         </div>
         <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+          <Dialog as="div" className="relative z-10" onClose={closeModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Siparişiniz Alındı
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Siparişiniz Alındı
-                    </p>
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900"
                     >
-                      Tamam
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
+                      Siparişiniz Alındı
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        Siparişiniz Alındı
+                      </p>
+                    </div>
+
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={closeModal}
+                      >
+                        Tamam
+                      </button>
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
             </div>
-          </div>
-        </Dialog>
-      </Transition>
+          </Dialog>
+        </Transition>
       </Layout>
     );
   }
