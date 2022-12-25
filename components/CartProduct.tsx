@@ -23,7 +23,7 @@ const CartProduct: React.FC<Props> = ({ product, count }) => {
             onClick={() => updateCount(product.urunID, 0)}
             className="font-semibold hover:text-red-500 text-gray-500 text-xs"
           >
-            Remove
+            Kaldır
           </a>
         </div>
       </div>
