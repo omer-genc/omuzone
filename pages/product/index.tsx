@@ -235,8 +235,6 @@ const Products: React.FC<Props> = ({
             </div>
           </div>
         </div>
-
-        {/* Pagination */}
       </Layout>
 
       <div
@@ -264,7 +262,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     (prev, current) => (prev.urunFiyati < current.urunFiyati ? prev : current),
     data.urunler[0]
   ).urunFiyati;
-
 
   const mostExpensivePrice = data.urunler.reduce(
     (prev, current) => (prev.urunFiyati > current.urunFiyati ? prev : current),

@@ -4,7 +4,6 @@ import { GetServerSideProps } from 'next';
 import api, { IRes } from '../bloc/api';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
-import Product from '../components/Product';
 import Link from 'next/link';
 
 type IProps = {
@@ -20,7 +19,7 @@ const Home: React.FC<IProps> = ({ data }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout categories={data.kategoriler}>
-        <div className="bg-red-300 flex-1">
+        <div className="flex-1">
           <Hero
             heading="Omu Shop"
             message="Lorem ipsum dolor sit amet consectetur adipisicing elit."
