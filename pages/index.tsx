@@ -13,15 +13,15 @@ const Home: React.FC<IProps> = ({ data }) => {
   return (
     <Fragment>
       <Head>
-        <title>Omu Shop | Anasayfa</title>
+        <title>omuzone | Anasayfa</title>
         <meta name="description" content="açıklama" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout categories={data.kategoriler}>
+      <Layout categories={data.kategoriler} products={data.urunler}>
         <div className="flex-1">
           <Hero
-            heading="Omu Shop"
+            heading="omuzone"
             message="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             image="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80"
           />
@@ -89,9 +89,11 @@ const Home: React.FC<IProps> = ({ data }) => {
               );
             })}
           </div>
-          <div className='flex justify-center mt-12'>
+          <div className="flex justify-center mt-12">
             <Link href="/product">
-              <button className="bg-black text-white hover:bg-slate-400 px-8 py-4 text-xl font-bold">Şimdi Alışveriş Yap</button>
+              <button className="bg-black text-white hover:bg-slate-400 px-8 py-4 text-xl font-bold">
+                Şimdi Alışveriş Yap
+              </button>
             </Link>
           </div>
 

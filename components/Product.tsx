@@ -1,25 +1,32 @@
 import Link from 'next/link';
 import React from 'react';
 import { AiFillHeart } from 'react-icons/ai';
-import { BsFillCartFill } from 'react-icons/bs';
 import { IProduct } from '../bloc/api';
+import { useStore } from '../bloc/store';
 
 type ProductProps = {
   data: IProduct;
 };
+
 const Product: React.FC<ProductProps> = ({ data }) => {
+  const { user, addTofavorites } = useStore();
+
+  const handleAddToFavorites = () => {
+    if (user) {
+      addTofavorites(data.urunID);
+    }
+  };
+
   return (
     <div className="shadow-xl p-2 h-80 bg-white flex flex-col relative">
       <AiFillHeart
+        onClick={handleAddToFavorites}
         className="absolute right-4 top-4 hover:fill-red-600 cursor-pointer"
-        size={20}
-      />
-      <BsFillCartFill
-        className="absolute cursor-pointer left-4 top-4 hover:fill-orange-500"
+        fill={user ? (user.favorites.includes(data.urunID) ? 'red' : '') : ''}
         size={20}
       />
 
-      <Link href={`/product/${data.urunID}`} >
+      <Link href={`/product/${data.urunID}`}>
         <div className="h-52 overflow-hidden border">
           <picture>
             <img

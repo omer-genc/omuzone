@@ -1,22 +1,39 @@
 import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
 import api, { ICategorie, IProduct } from '../../bloc/api';
+import { useStore } from '../../bloc/store';
 import Layout from '../../components/Layout';
 
 type Props = {
   categories: ICategorie[];
   product: IProduct;
+  products: IProduct[];
 };
 
-const ProductDetail: React.FC<Props> = ({ categories, product }) => {
+const ProductDetail: React.FC<Props> = ({ categories, product, products }) => {
   const [mainImage, setMainImage] = useState(product.urunFotograflari[0]);
+  const [count, setCount] = useState(1);
+
+  const { addTocart, addTofavorites, user, handleUserModal } = useStore();
 
   const handleSetImage = (image: string) => {
     setMainImage(image);
   };
 
+  const handleAddToFavorites = () => {
+    addTofavorites(product.urunID);
+  };
+
+  const handleAddToCart = () => {
+    if (user) {
+      addTocart(product.urunID, count);
+    } else {
+      handleUserModal(true);
+    }
+  };
+
   return (
-    <Layout categories={categories} isOneColor={true}>
+    <Layout categories={categories} isOneColor={true} products={products}>
       <section className="text-gray-700 body-font overflow-hidden bg-white ">
         <div className="container px-5 py-24 mx-auto mt- md:mt-24">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
@@ -81,11 +98,15 @@ const ProductDetail: React.FC<Props> = ({ categories, product }) => {
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Adet</span>
                   <div className="relative">
-                    <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-orange-500 text-base pl-3 pr-10">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
+                    <select
+                      onChange={(e) => setCount(Number(e.currentTarget.value))}
+                      value={count}
+                      className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-orange-500 text-base pl-3 pr-10"
+                    >
+                      <option value={1}>1</option>
+                      <option value={2}>2</option>
+                      <option value={3}>3</option>
+                      <option value={4}>4</option>
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
@@ -121,12 +142,29 @@ const ProductDetail: React.FC<Props> = ({ categories, product }) => {
                     {product.urunFiyati.toLocaleString()} ₺
                   </span>
                 )}
-                <button className="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">
-                  Sepete Ekle
+                <button
+                  onClick={handleAddToCart}
+                  className="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded disabled:bg-green-500"
+                  disabled={
+                    user && user.cart.some((x) => x.id === product.urunID)
+                      ? true
+                      : false
+                  }
+                >
+                  {user && user.cart.some((x) => x.id === product.urunID)
+                    ? 'Sepette'
+                    : 'Sepete Ekle'}
                 </button>
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
-                    fill="currentColor"
+                    fill={
+                      user
+                        ? user.favorites.includes(product.urunID)
+                          ? 'red'
+                          : ''
+                        : ''
+                    }
+                    onClick={handleAddToFavorites}
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
@@ -170,6 +208,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       categories: data.kategoriler,
       product,
+      products: data.urunler,
     },
   };
 };

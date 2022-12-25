@@ -9,6 +9,7 @@ import { IoIosOptions } from 'react-icons/io';
 import Pagination from '../../components/Pagination';
 type Props = {
   products: IProduct[];
+  allProducts: IProduct[];
   categories: ICategorie[];
   selectedCategories: string[];
   isPromotion: boolean;
@@ -27,6 +28,7 @@ const Products: React.FC<Props> = ({
   selectedCategories,
   categories,
   products,
+  allProducts,
   meta,
   isPromotion,
 }) => {
@@ -107,7 +109,7 @@ const Products: React.FC<Props> = ({
 
   return (
     <div>
-      <Layout isOneColor={true} categories={categories}>
+      <Layout isOneColor={true} categories={categories} products={allProducts}>
         <div className="container mx-auto p-2 mt-20 sm:mt-48">
           <div className="grid grid-cols-12">
             <div
@@ -304,6 +306,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
       categories: data.kategoriler,
       selectedCategories: categories || [],
       isPromotion: isPromotion,
+      allProducts: data.urunler,
       meta: {
         page: page,
         totalPage: totalPage,

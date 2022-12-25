@@ -1,11 +1,10 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import {
-  AiOutlineShoppingCart,
-  AiOutlineHeart,
-} from 'react-icons/ai';
+import { AiOutlineShoppingCart, AiOutlineHeart } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi';
 import { ICategorie } from '../bloc/api';
+import { useStore } from '../bloc/store';
 
 type Props = {
   categories: ICategorie[];
@@ -16,8 +15,23 @@ const Navbar: React.FC<Props> = ({ categories, isOneColor }) => {
   const [color, setColor] = useState('transparent');
   const [textColor, setTextColor] = useState('white');
 
+  const { handleUserModal, user } = useStore();
+  const router = useRouter();
+
+  const handleUserModalClick = () => {
+    handleUserModal(true);
+  };
+
+  const handleCart = () => {
+    if (user) {
+      router.push('/cart');
+    } else {
+      handleUserModal(true);
+    }
+  };
+
   useEffect(() => {
-    if(isOneColor) {
+    if (isOneColor) {
       setColor('#ffffff');
       setTextColor('#000000');
       return;
@@ -41,7 +55,7 @@ const Navbar: React.FC<Props> = ({ categories, isOneColor }) => {
   return (
     <div
       style={{ backgroundColor: `${color}` }}
-      className="fixed left-0 top-0 w-full z-10 ease-in duration-300 shadow-xl"
+      className="fixed left-0 top-0 w-full z-10 ease-in duration-300 border-b-2 border-gray-300"
     >
       <div className="max-w-[1240px] m-auto flex justify-between items-center p-4 text-white">
         <Link href="/">
@@ -50,13 +64,14 @@ const Navbar: React.FC<Props> = ({ categories, isOneColor }) => {
           </h1>
         </Link>
         <ul style={{ color: `${textColor}` }} className="flex">
-          <li className="p-4">
+          <li onClick={handleUserModalClick} className="p-4 cursor-pointer">
             <BiUser size={20} />
           </li>
-          <li className="p-4">
+          <li onClick={handleCart} className="p-4 cursor-pointer relative">
             <AiOutlineShoppingCart size={20} />
+            {user?.cart?.length ? <span className='absolute top-2 right-2 text-sm text-orange-500'>{user.cart.length}</span> : null}
           </li>
-          <li className="p-4">
+          <li onClick={handleUserModalClick} className="p-4 cursor-pointer">
             <AiOutlineHeart size={20} />
           </li>
         </ul>
