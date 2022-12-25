@@ -98,7 +98,7 @@ const Cart: React.FC<Props> = ({ data }) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
@@ -107,14 +107,14 @@ const Cart: React.FC<Props> = ({ data }) => {
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        Siparişiniz Alındı
+                        Profilinizden sipariş geçmişinize ulaşabilirsiniz.
                       </p>
                     </div>
 
                     <div className="mt-4">
                       <button
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        className="w-full mt-4 py-2 px-1 outline-orange-600 border border-orange-500 hover:bg-orange-500 hover:text-white"
                         onClick={closeModal}
                       >
                         Tamam
