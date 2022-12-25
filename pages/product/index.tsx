@@ -128,7 +128,7 @@ const Products: React.FC<Props> = ({
           {search && (
             <div className="absolute z-20 w-full top-20 left-0 bg-orange-500 flex flex-wrap">
               {allProducts.filter((item) =>
-                item.urunAdi.toLowerCase().includes(search.toLowerCase())
+                item.urunAdi.includes(search)
               ).length === 0 ? (
                 <div className="w-full text-center p-4 text-xl text-white font-bold">
                   Sonuç bulunamadı
